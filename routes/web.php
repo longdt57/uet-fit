@@ -22,9 +22,13 @@ Route::get('/search/doanhnghiep','MyHomeController@search_doanhnghiep');
 
 
 Auth::routes();
-Route::group(['middleware' => 'checkeditableIsAdmin'], function () {
-	Route::get('/accounts-manager','MyHomeController@accounts');
-	Route::get('/accounts-save','MyHomeController@accounts_save');
+Route::group(['middleware' => 'checkIsAdmin'], function () {
+	Route::get('/accounts-manager','AccountManagerController@accounts');
+	Route::get('/accounts-save','AccountManagerController@accounts_save');
+	Route::get('/accounts/{user}','AccountManagerController@account_modify');
+	Route::get('/new-user','AccountManagerController@new_user');
+	Route::post('/new-user-saved','AccountManagerController@new_user_save');
+	Route::post('/account-update','AccountManagerController@account_update');
 
 });
 

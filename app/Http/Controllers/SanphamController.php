@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Sanpham;
 use App\UserListImport;
 use App\Utils;
+use DB;
 
 class SanphamController extends Controller
 {
@@ -13,6 +14,7 @@ class SanphamController extends Controller
       $enableEdit=true;
     	return view('sanpham.detail',compact('sanpham','enableEdit'));
     }
+
     public function create(){
     	return view('sanpham.create');
     }
@@ -48,11 +50,9 @@ class SanphamController extends Controller
     }
     public function update(Request $request){
       $id = $request->id;
-      $sanpham = Sanpham::find($id);
-      $sanpham->delete();
-      $in = Utils::requestToInsertArray($request->toArray(), (new Sanpham)->getTable());
-      $in[(new Sanpham)->getKeyName()] = $id;
-      Sanpham::insert($in);
+      $insert = Utils::requestToInsertArray($request->toArray(), (new Sanpham)->getTable());
+      DB::table((new SanPham)->getTable())->where('id',$id)->update($insert);
+
       $sanpham = Sanpham::find($id);
       return view('sanpham.detail',compact('sanpham'));
     }

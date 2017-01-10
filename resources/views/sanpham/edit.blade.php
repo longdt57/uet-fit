@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form class="form-horizontal" method="POST" action={{ url('/sanpham_update')}}" enctype="multipart/form-data">
+<form class="form-horizontal" method="POST" action="{{ url('/sanpham_update')}}" enctype="multipart/form-data">
 <h2 style="margin:auto; width:fit-content" class="text-primary">{{$sanpham->ten_san_pham}}</h2>
 <br><br>
 <input type="hidden" name="id" value="{{$sanpham->IID}}">

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Bangphatminh_sangche;
+use DB;
+use App\Utils;
 class PhatminhController extends Controller
 {
     public function detail(Bangphatminh_sangche $phatminh){
@@ -21,21 +23,7 @@ class PhatminhController extends Controller
 
 			  \Excel::load($path, function($reader) {
           foreach($reader->toArray() as $key=>$v){
-            $insert =[
-              Bangphatminh_sangche::$COLUMN_TEN=>$v[Bangphatminh_sangche::$COLUMN_TEN],
-              Bangphatminh_sangche::$COLUMN_SOBANG=> $v[Bangphatminh_sangche::$COLUMN_SOBANG],
-              Bangphatminh_sangche::$COLUMN_LINHVUC=>$v[Bangphatminh_sangche::$COLUMN_LINHVUC],
-              Bangphatminh_sangche::$COLUMN_NGAYCONGBO=>$v[Bangphatminh_sangche::$COLUMN_NGAYCONGBO],
-              Bangphatminh_sangche::$COLUMN_NGAYCAP=>$v[Bangphatminh_sangche::$COLUMN_NGAYCAP],
-              Bangphatminh_sangche::$COLUMN_CHUSOHUU=>$v[Bangphatminh_sangche::$COLUMN_CHUSOHUU],
-              Bangphatminh_sangche::$COLUMN_TACGIA=>$v[Bangphatminh_sangche::$COLUMN_TACGIA],
-              Bangphatminh_sangche::$COLUMN_DDNOIBAT=>$v[Bangphatminh_sangche::$COLUMN_DDNOIBAT],
-              Bangphatminh_sangche::$COLUMN_MOTACHUNG=>$v[Bangphatminh_sangche::$COLUMN_MOTACHUNG],
-              Bangphatminh_sangche::$COLUMN_CHUYENGIAO=>$v[Bangphatminh_sangche::$COLUMN_CHUYENGIAO],
-              Bangphatminh_sangche::$COLUMN_UNGDUNG=>$v[Bangphatminh_sangche::$COLUMN_UNGDUNG]
-
-            ];
-            Bangphatminh_sangche::insert($insert);
+            Bangphatminh_sangche::insert($v);
           }
         });
 
@@ -49,19 +37,8 @@ class PhatminhController extends Controller
          return view('home.index', compact('bangphatminh_sangche','keyword','filter','soluong_ketqua','pagi'));
 
       }
-      $insert = [
-        Bangphatminh_sangche::$COLUMN_TEN=>$request->ten_sangche_phatminh_giaiphap,
-        Bangphatminh_sangche::$COLUMN_SOBANG=> $request->sobang_kyhieu,
-        Bangphatminh_sangche::$COLUMN_LINHVUC=>$request->thuoclinhvucKHCN,
-        Bangphatminh_sangche::$COLUMN_NGAYCONGBO=>$request->ngaycongbo,
-        Bangphatminh_sangche::$COLUMN_NGAYCAP=>$request->ngaycap,
-        Bangphatminh_sangche::$COLUMN_CHUSOHUU=>$request->chusohuuchinh,
-        Bangphatminh_sangche::$COLUMN_TACGIA=>$request->tacgia,
-        Bangphatminh_sangche::$COLUMN_DDNOIBAT=>$request->diem_noi_bat,
-        Bangphatminh_sangche::$COLUMN_MOTACHUNG=>$request->mota_ve_sangche_phatminh_giaiphap,
-        Bangphatminh_sangche::$COLUMN_CHUYENGIAO=>$request->noidung_cothe_chuyengiao,
-        Bangphatminh_sangche::$COLUMN_UNGDUNG=>$request->thitruong_ungdung
-      ];
+      $tb = new Bangphatminh_sangche;
+      $insert = Utils::requestToInsertArray($request->toArray(),$tb->getTable());
       Bangphatminh_sangche::insert($insert);
     	return view('phatminh.create')->with('result','Success!');
     }
@@ -69,22 +46,10 @@ class PhatminhController extends Controller
       return view('phatminh.edit',compact('phatminh'));
     }
     public function update(Request $request){
-      $phatminh = Bangphatminh_sangche::find($request->ID);
-      $insert = [
-        Bangphatminh_sangche::$COLUMN_TEN=>$request->ten_sangche_phatminh_giaiphap,
-        Bangphatminh_sangche::$COLUMN_SOBANG=> $request->sobang_kyhieu,
-        Bangphatminh_sangche::$COLUMN_LINHVUC=>$request->thuoclinhvucKHCN,
-        Bangphatminh_sangche::$COLUMN_NGAYCONGBO=>$request->ngaycongbo,
-        Bangphatminh_sangche::$COLUMN_NGAYCAP=>$request->ngaycap,
-        Bangphatminh_sangche::$COLUMN_CHUSOHUU=>$request->chusohuuchinh,
-        Bangphatminh_sangche::$COLUMN_TACGIA=>$request->tacgia,
-        Bangphatminh_sangche::$COLUMN_DDNOIBAT=>$request->diem_noi_bat,
-        Bangphatminh_sangche::$COLUMN_MOTACHUNG=>$request->mota_ve_sangche_phatminh_giaiphap,
-        Bangphatminh_sangche::$COLUMN_CHUYENGIAO=>$request->noidung_cothe_chuyengiao,
-        Bangphatminh_sangche::$COLUMN_UNGDUNG=>$request->thitruong_ungdung
-      ];
-      $phatminh->updateDatabyarray($insert);
-      $phatminh->save();
+      $id = $request->ID;
+      $tb = new Bangphatminh_sangche;
+      $insert = Utils::requestToInsertArray($request->toArray(),$tb->getTable());
+      DB::table($tb->getTable())->where($tb->getKeyName(),$id)->update($insert);
 
       $phatminh= Bangphatminh_sangche::find($request->ID);
       return $this->detail($phatminh);

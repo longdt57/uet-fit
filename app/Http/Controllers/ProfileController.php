@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Profile;
 use Auth;
 use App\Utils;
+use DB;
 class ProfileController extends Controller
 {
     public function detail(Profile $profile){
@@ -46,14 +47,11 @@ class ProfileController extends Controller
     }
     public function update(Request $request){
         $id = $request->ID;
-        $profiles = Profile::find($id);
+        $tb = new Profile;
         $insert = Utils::requestToInsertArray($request->toArray(), (new Profile)->getTable());
-        $insert[(new Profile)->getKeyName()] = $id;
+        DB::table($tb->getTable())->where($tb->getKeyName(),$id)->update($insert);
 
-      	$profiles->delete();
-
-        Profile::insert($insert);
-        $profile = Profile::find($request->ID);
+        $profile = Profile::find($id);
         return view('profiles.detail', compact('profile'));
     }
 }

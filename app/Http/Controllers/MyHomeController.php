@@ -209,49 +209,5 @@ class MyHomeController extends Controller
     return view('home.index', compact('doanhnghiep','keyword','filter','soluong_ketqua','pagi','hasChart'));
 
   }
-  public function accounts(){
-    $users = DB::table('users')->paginate(5);
-    return view('accounts', compact('users'));
-  }
-  public function accounts_save(Request $request){
-    if($request->has('permissionId')){
-      $permissionlist = $request->permissionChange;
-      $idlist = $request->permissionId;
-      $listPer = explode('\n', $permissionlist);
-      $listId = explode('\n', $idlist);
-      $createChange = 1;
-      $editChange=2;
-      $full=3;
-      $key = $listId[0];
-      $user = DB::table('users')->where("email",'"'.$listId[0].'"')->first();
-        return $user;
-      for ($i=0; $i<count($idlist); $i++) {
-        $user = DB::table('users')->where('email',$listId[$i])->first();
-        return $user;
-        switch ($listPer[$i]) {
-          case $createChange:
-            $user['create'] = !$user['create'];
-            break;
-          case $editChange:
-            $user['edit'] = !$user['edit'];
-            break;
-          case $full:
-            $user['edit'] = !$user['edit'];
-            $user['create'] = !$user['create'];
-            break;
-
-          default:
-            # code...
-            break;
-        }
-      }
-      $oldUser = DB::table('users')->find($user['id']);
-      $oldUser->delete();
-      DB::table('users')->insert($user);
-      $users = DB::table('users')->paginate(5);
-      return view('accounts', compact('users'));
-    }else return "no change";
-
-  }
-
+  
 }

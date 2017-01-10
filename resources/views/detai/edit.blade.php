@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form class="form-horizontal" method="GET" action=""{{ url('/detai_update')}}">
+<form class="form-horizontal" method="GET" action="{{ url('/detai_update')}}">
 <h2 style="margin:auto; width:fit-content" class="text-primary">{{$detai->ten_detai}}</h2>
 <br><br>
 <input type="hidden" name="ID" value="{{$detai->IID}}">

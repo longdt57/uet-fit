@@ -54,6 +54,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'checkcreateable' => \App\Http\Middleware\CheckCreateAble::class,
         'checkeditable' =>  \App\Http\Middleware\CheckEditAble::class,
-        'checkeditableIsAdmin' =>  \App\Http\Middleware\CheckIsAdmin::class,
+        'checkIsAdmin' =>  \App\Http\Middleware\CheckIsAdmin::class,
     ];
 }

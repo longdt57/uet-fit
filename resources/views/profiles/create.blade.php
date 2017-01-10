@@ -7,7 +7,7 @@
     echo "<script type='text/javascript'>alert('$message');</script>";
   }
 ?>
-<form class="form-horizontal" method="POST" action={{ url('/profiles-store')}}" enctype="multipart/form-data">
+<form class="form-horizontal" method="POST" action="{{ url('/profiles-store')}}" enctype="multipart/form-data">
 <h2 style="margin:auto; width:fit-content" class="text-primary">Chuyên gia mới</h2>
 <br><br>
 {{ csrf_field() }}
