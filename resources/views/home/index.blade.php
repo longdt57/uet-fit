@@ -44,13 +44,47 @@ a:visited{
 .item-title{
 	margin:0px;
 }
-
+.carousel {
+    margin-bottom: 0;
+    padding: 0 40px 30px 40px;
+}
+/* The controlsy */
+.carousel-control {
+	left: -12px;
+    height: 40px;
+	width: 40px;
+    background: none repeat scroll 0 0 #222222;
+    border: 4px solid #FFFFFF;
+    border-radius: 23px 23px 23px 23px;
+    margin-top: 90px;
+}
+.carousel-control.right {
+	right: -12px;
+}
+/* The indicators */
+.carousel-indicators {
+	right: 50%;
+	top: auto;
+	bottom: -10px;
+	margin-right: -19px;
+}
+/* The colour of the indicators */
+.carousel-indicators li {
+	background: #cecece;
+}
+.carousel-indicators .active {
+background: #428bca;
+}
 @stop
 @section('content')
+	
 	<?php
 		$locallinks=Request::root();
 		function cutstr($in){
 			return substr($in, 0,500)."...";
+		}
+		function cutstr2($in, $length){
+			return substr($in, 0,$length)."...";
 		}
 	?>
 	<div class="row" style="margin-top:20px">
@@ -114,9 +148,93 @@ a:visited{
 	 đề tài, dự án các cấp; {{$counts['bangphatminh_sangche']}} bằng phát minh,
 	 sáng chế, giải pháp hữu ích; {{$counts['thongtinchung']}} doanh nghiệp ứng dụng
 	 công nghệ;
-</p>
+	</p>
 	</div>
-<?php }
+	<div class="row">
+		<div class="col-md-12">
+                <div id="Carousel" class="carousel slide">
+
+                <ol class="carousel-indicators">
+                    <li data-target="#Carousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#Carousel" data-slide-to="1"></li>
+                    <li data-target="#Carousel" data-slide-to="2"></li>
+                    <li data-target="#Carousel" data-slide-to="3"></li>
+                    <li data-target="#Carousel" data-slide-to="4"></li>
+                </ol>
+
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+
+                <div class="item active">
+                	<div class="row">
+
+                    <?php foreach($profiles as $profile){?>
+                    <div class="col-md-2"><a href="{{ url('/profiles/'.$profile->getKey())}}" class="thumbnail" style="height:200px; text-align:center;padding-top:120px; text-color:black"><strong>{{$profile->Hoc_vi}}.
+											{{$profile->Ho_va_ten}}</strong><br>
+                      <small class="text-primary"><?php echo cutstr2($profile->Co_quan,50);?></small></a></div>
+                    <?php }?>
+
+                	</div><!--.row-->
+                </div><!--.item-->
+
+                <div class="item">
+                	<div class="row">
+                    <?php foreach($detai_du_an_caccap as $detai){ ?>
+                      <div class="col-md-2"><a href="{{ url('/detai/'.$detai->id)}}" class="thumbnail" style="height:200px; text-align:center;padding-top:120px; text-color:black"><strong>
+                        <?php echo cutstr2($detai->ten_detai,50);?></strong><br>
+                        </a></div>
+
+                    <?php }?>
+
+                	</div><!--.row-->
+                </div><!--.item-->
+
+                <div class="item">
+
+                	<div class="row">
+
+                    <?php foreach($sanpham as $sp){ ?>
+                      <div class="col-md-2"><a href="{{ url('/sanpham/'.$sp->id)}}" class="thumbnail" style="height:200px; text-align:center;padding-top:120px; text-color:black"><strong>
+                        <?php echo cutstr2($sp->ten_san_pham,50);?></strong><br>
+                        </a></div>
+
+                    <?php }?>
+
+                	</div><!--.row-->
+                </div><!--.item-->
+                <div class="item">
+                	<div class="row">
+                    <?php foreach($bangphatminh_sangche as $phatminh){ ?>
+                      <div class="col-md-2"><a href="{{ url('/phatminh/'.$phatminh->id)}}" class="thumbnail" style="height:200px; text-align:center;padding-top:120px; text-color:black"><strong>
+                        <?php echo cutstr2($phatminh->ten_sangche_phatminh_giaiphap,50);?></strong><br>
+                        </a></div>
+
+                    <?php }?>
+
+                	</div><!--.row-->
+                </div><!--.item-->
+                <div class="item">
+                	<div class="row">
+
+                    <?php foreach($doanhnghiep as $dn){ ?>
+                      <div class="col-md-2"><a href="{{ url('/doanhnghiep/'.$dn->Id)}}" class="thumbnail" style="height:200px; text-align:center;padding-top:120px; text-color:black"><strong>
+                        <?php echo cutstr2($dn->TenDoanhNghiep,50);?></strong><br>
+                        </a></div>
+
+                    <?php }?>
+
+                	</div><!--.row-->
+                </div><!--.item-->
+
+                </div><!--.carousel-inner-->
+                  <a data-slide="prev" href="#Carousel" class="left carousel-control" style="width:40px">‹</a>
+                  <a data-slide="next" href="#Carousel" class="right carousel-control" style="width:40px">›</a>
+                </div><!--.Carousel-->
+
+		</div>
+	</div>
+
+<?php }else{
 		if(isset($soluong_ketqua)){ ?>
 		<div style="margin-top:10px">
 			<small >Kết quả tìm kiếm: {{$soluong_ketqua}} mục</small>
@@ -226,10 +344,6 @@ a:visited{
 				<?php if(isset($pagi)){?>
 					{{$doanhnghiep->links()}}
 				<?php }?>
-		<?php }?>
-
-
-
-
+		<?php }}?>
 
 @stop

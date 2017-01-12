@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Fit-Uet') }}</title>
+    <title>{{ config('app.name', 'Khoa học') }}</title>
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
@@ -19,6 +20,9 @@
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>
+        function categorychange(){
+
+        }
     </script>
     <style>
       @yield('style')
@@ -44,7 +48,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        {{ config('app.name', 'Khoa học') }}
                     </a>
                 </div>
 
@@ -61,6 +65,25 @@
                             <li><a href="{{ url('/login') }}">Login</a></li>
                             <li><a href="{{ url('/register') }}">Register</a></li>
                         @else
+                          @if(Auth::user()->isCreate())
+                              <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    ADD <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{{ url('/profiles-create')}}">Chuyên gia</a>
+                                        <a href="{{ url('/detai-create')}}">Đề tài</a>
+                                        <a href="{{ url('/phatminh-create')}}">Phát minh</a>
+                                        <a href="{{ url('/sanpham-create')}}">Sản phẩm</a>
+                                        <a href="{{ url('/doanhnghiep-create')}}">Doanh nghiệp</a>
+                                    </li>
+                                </ul>
+                            </li>
+                          @endif
+
+
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -77,7 +100,13 @@
                                         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
+
                                     </li>
+                                    @if(Auth::user()->isAdmin())
+                                        <li>
+                                            <a href="{{ url('/accounts-manager') }}">Accounts Manager</a>
+                                        </li>
+                                    @endif
                                 </ul>
                             </li>
                         @endif
@@ -88,6 +117,9 @@
 
     <div class="container">
         @yield('content')
+        @if(isset($enableEdit)&&Auth::user()!=null &&Auth::user()->isEdit())
+        <a href="{{ url($link_edit)}}" class="btn btn-primary">Edit</a>
+        @endif
     </div>
     <div style="height:100px">
     </div>

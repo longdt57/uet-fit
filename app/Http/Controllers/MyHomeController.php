@@ -48,7 +48,7 @@ class MyHomeController extends Controller
         session(['filter'=>$filter]);
         $keyword="";
         session(['keyword'=>$keyword]);
-        $limitItem=10;
+        $limitItem=6;
         $profiles = Profile::limit($limitItem)->get();
         $bangphatminh_sangche = Bangphatminh_sangche::limit($limitItem)->get();
         $detai_du_an_caccap=Detai_du_an_caccap::limit($limitItem)->get();
