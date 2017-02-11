@@ -136,29 +136,32 @@ background: #428bca;
 	</div>
 	@if(isset($hasChart)&&$hasChart)
 		<script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
+      google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
-
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
-        ]);
-
+    
+       var record={!! json_encode($chartvalue) !!};
+       console.log(record);
+       // Create our data table.
+       var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Source');
+       data.addColumn('number', 'Total_Signup');
+       for(var k in record){
+            var v = record[k];
+           
+             data.addRow([k,v]);
+          console.log(v);
+          }
         var options = {
-          title: 'My Daily Activities'
+          title: "{{$chartname}}",
+          is3D: true,
+          
         };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
         chart.draw(data, options);
       }
     </script>
-		<div id="piechart" class = "col-md-12" style="height:300px; margin-top:20px">
+		<div id="piechart_3d" class = "col-md-12" style="height:300px; margin-top:20px">
 		</div>
 	@endif
 
