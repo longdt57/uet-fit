@@ -21,15 +21,20 @@ class Utils{
   public static function createChart($rows, $title){
     $countTable = \Lava::DataTable();
     $countTable->addStringColumn('title')
-      ->addNumberColumn('Số lượng');
+      ->addNumberColumn('Percent');
     foreach ($rows as $key => $value) {
       $countTable->addRow([$key, $value]);
     }
-    $chart = \Lava::BarChart('Tổng quan', $countTable, [
+    $chart = \Lava::PieChart('Tổng quan', $countTable, [
         'title'=>$title,
-        'titleTextStyle' => [
-        'color'    => '#eb6b2c',
-        'fontSize' => 12]
+        'is3D'   => true,
+        'slices' => [
+        ['offset' => 0.1],
+        ['offset' => 0.1],
+        ['offset' => 0.1],
+        ['offset' => 0.1]
+
+    ]
         ]);
   }
   public static function createChart_QueryStr($queryStr, $title2){

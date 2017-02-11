@@ -81,7 +81,7 @@ background: #428bca;
 	<?php
 		$locallinks=Request::root();
 		function cutstr($in){
-			return substr($in, 0,500)."...";
+			return $in;
 		}
 		function cutstr2($in, $length){
 			return substr($in, 0,$length)."...";
@@ -135,7 +135,7 @@ background: #428bca;
 	@if(isset($hasChart)&&$hasChart)
 		<div id="count-chart" class = "col-md-12" style="height:300px; margin-top:20px">
 
-				<?php echo \lava::render('BarChart', 'Tổng quan', 'count-chart');?>
+				<?php echo \lava::render('PieChart', 'Tổng quan', 'count-chart');?>
 
 		</div>
 	@endif
@@ -277,7 +277,13 @@ background: #428bca;
 									<h4 class="item-title">{{$detai->ten_detai}}</h4></a>
 									<small class="text-primary">{{$locallinks."/detai/$detai->Code
                     -$detai->Chairman-$detai->datestart-$detai->dateend"}}</small><br>
-									<small >{{cutstr($detai->mota_chung)}}</small>
+									<small ><strong>Lĩnh vực: </strong>{{$detai->linhvuc}}, 
+									<strong>Mã số, ký hiệu: </strong>
+									{{$detai->maso_kyhieu}}, <strong>Chủ nhiệm đề tài, tác giả: </strong>
+									{{$detai->chu_nhiem_detai}}, <strong>Thời gian kết thúc:</strong>
+									{{$detai->nam_end}}
+
+									</small>
 						</p>
 					<?php }?>
 				</ul>
@@ -297,7 +303,12 @@ background: #428bca;
 						</a>
 							<small class="text-primary">{{$locallinks."/phatminh/$phatminh->code
                 -$phatminh->owner-$phatminh->datepublish"}}</small><br>
-							<small >{{cutstr($phatminh->mota_ve_sangche_phatminh_giaiphap)}}</small>
+							<small >
+								<strong>Lĩnh vực: </strong>{{$phatminh->thuoclinhvucKHCN}},
+								<strong>Số, ký hiệu, bằng: </strong>{{$phatminh->sobang_kyhieu}},
+								<strong>Tác giả: </strong> {{$phatminh->tacgia}},
+								<strong>Ngày công bố: </strong>{{$phatminh->ngaycongbo}}
+							</small>
 
 					</p>
 					<?php }?>
@@ -317,7 +328,10 @@ background: #428bca;
 							<h4 class="item-title">{{$sp->ten_san_pham}}</h4>
 						</a>
 						<small class="text-primary">{{$locallinks."/sanpham/$sp->field"}}</small><br>
-						<small >{{cutstr($sp->mo_ta_chung)}}</small>
+						<small >
+							<strong>Lĩnh vực: </strong>{{$sp->linh_vuc}}, 
+							<strong>Khả năng ứng dụng: </strong>{{$sp->kha_nang_ung_dung}},
+						</small>
 					</p>
 					<?php }?>
 				</ul>

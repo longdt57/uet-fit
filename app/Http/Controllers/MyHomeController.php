@@ -141,7 +141,7 @@ class MyHomeController extends Controller
     $counts = Utils::$CHART_COUNT;
     $queryStr = "select linhvuc as $title , count(*) as $counts from detai_du_an_caccap
     group by linhvuc order by $counts desc limit 5";
-    Utils::createChart_queryStr($queryStr, "Lĩnh vực");
+    Utils::createChart_queryStr($queryStr, "Đề tài dự án");
     $hasChart = $keyword==""?true:false;
 
     return view('home.index', compact('detai_du_an_caccap','keyword','filter','soluong_ketqua','pagi','hasChart'));
@@ -161,7 +161,7 @@ class MyHomeController extends Controller
     $counts = Utils::$CHART_COUNT;
     $queryStr = "select thuoclinhvucKHCN as $title , count(*) as $counts from bangphatminh_sangche
     group by thuoclinhvucKHCN order by $counts desc limit 5";
-    Utils::createChart_queryStr($queryStr, "Lĩnh vực");
+    Utils::createChart_queryStr($queryStr, "Bằng phát minh - sáng chế");
     $hasChart = $keyword==""?true:false;
 
     return view('home.index', compact('bangphatminh_sangche','keyword','filter','soluong_ketqua','pagi','hasChart'));
@@ -182,7 +182,7 @@ class MyHomeController extends Controller
     $counts = Utils::$CHART_COUNT;
     $queryStr = "select linh_vuc as $title , count(*) as $counts from sanpham
     group by linh_vuc order by $counts desc limit 5";
-    Utils::createChart_queryStr($queryStr, "Lĩnh vực");
+    Utils::createChart_queryStr($queryStr, "Sản phẩm");
     $hasChart = $keyword==""?true:false;
 
     return view('home.index', compact('sanpham','keyword','filter','soluong_ketqua','pagi', 'hasChart'));
@@ -203,7 +203,7 @@ class MyHomeController extends Controller
     $counts = Utils::$CHART_COUNT;
     $queryStr = "select LinhVuc as $title , count(*) as $counts from thongtinchung
     group by LinhVuc order by $counts desc limit 5";
-    Utils::createChart_queryStr($queryStr, "Lĩnh vực");
+    Utils::createChart_queryStr($queryStr, "Doanh nghiệp");
     $hasChart = $keyword==""?true:false;
 
     return view('home.index', compact('doanhnghiep','keyword','filter','soluong_ketqua','pagi','hasChart'));
