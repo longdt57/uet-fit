@@ -122,9 +122,14 @@ class MyHomeController extends Controller
     $counts = Utils::$CHART_COUNT;
     $queryStr = "select Hoc_vi as $title, count(*) as $counts from profiles group by
     Hoc_vi order by $counts desc limit 5";
-    Utils::createChart_queryStr($queryStr, "Nhà khoa học");
+
+
     $hasChart = $keyword==""?true:false;
-    return view('home.index', compact('profiles','keyword','filter','soluong_ketqua','pagi','hasChart'));
+    if($hasChart){
+      $chartvalue = Utils::createChart_queryStr($queryStr, "Nhà khoa học");
+      $chartname = "Nhà khoa học";
+    }
+    return view('home.index', compact('profiles','keyword','filter','soluong_ketqua','pagi','hasChart','chartvalue','chartname'));
   }
   public function search_detai(){
     $filter="detai_du_an_caccap";
@@ -141,10 +146,14 @@ class MyHomeController extends Controller
     $counts = Utils::$CHART_COUNT;
     $queryStr = "select linhvuc as $title , count(*) as $counts from detai_du_an_caccap
     group by linhvuc order by $counts desc limit 5";
-    Utils::createChart_queryStr($queryStr, "Đề tài dự án");
-    $hasChart = $keyword==""?true:false;
+    
+        $hasChart = $keyword==""?true:false;
+    if($hasChart){
+      $chartvalue = Utils::createChart_queryStr($queryStr, "Nhà khoa học");
+      $chartname = "Đề tài - dự án";
+    }
 
-    return view('home.index', compact('detai_du_an_caccap','keyword','filter','soluong_ketqua','pagi','hasChart'));
+    return view('home.index', compact('detai_du_an_caccap','keyword','filter','soluong_ketqua','pagi','hasChart','chartvalue','chartname'));
   }
   public function search_phatminh(){
     $filter="phatminh_sangche";
@@ -161,10 +170,14 @@ class MyHomeController extends Controller
     $counts = Utils::$CHART_COUNT;
     $queryStr = "select thuoclinhvucKHCN as $title , count(*) as $counts from bangphatminh_sangche
     group by thuoclinhvucKHCN order by $counts desc limit 5";
-    Utils::createChart_queryStr($queryStr, "Bằng phát minh - sáng chế");
+    
     $hasChart = $keyword==""?true:false;
+    if($hasChart){
+      $chartvalue = Utils::createChart_queryStr($queryStr, "Nhà khoa học");
+      $chartname = "Bằng phát minh - sáng chế";
+    }
 
-    return view('home.index', compact('bangphatminh_sangche','keyword','filter','soluong_ketqua','pagi','hasChart'));
+    return view('home.index', compact('bangphatminh_sangche','keyword','filter','soluong_ketqua','pagi','hasChart','chartvalue','chartname'));
 
   }
   public function search_sanpham(){
@@ -182,10 +195,14 @@ class MyHomeController extends Controller
     $counts = Utils::$CHART_COUNT;
     $queryStr = "select linh_vuc as $title , count(*) as $counts from sanpham
     group by linh_vuc order by $counts desc limit 5";
-    Utils::createChart_queryStr($queryStr, "Sản phẩm");
-    $hasChart = $keyword==""?true:false;
+    
+        $hasChart = $keyword==""?true:false;
+    if($hasChart){
+      $chartvalue = Utils::createChart_queryStr($queryStr, "Nhà khoa học");
+      $chartname = "Sản phẩm";
+    }
 
-    return view('home.index', compact('sanpham','keyword','filter','soluong_ketqua','pagi', 'hasChart'));
+    return view('home.index', compact('sanpham','keyword','filter','soluong_ketqua','pagi', 'hasChart','chartvalue','chartname'));
 
   }
   public function search_doanhnghiep(){
@@ -203,10 +220,14 @@ class MyHomeController extends Controller
     $counts = Utils::$CHART_COUNT;
     $queryStr = "select LinhVuc as $title , count(*) as $counts from thongtinchung
     group by LinhVuc order by $counts desc limit 5";
-    Utils::createChart_queryStr($queryStr, "Doanh nghiệp");
-    $hasChart = $keyword==""?true:false;
+    
+        $hasChart = $keyword==""?true:false;
+    if($hasChart){
+      $chartvalue = Utils::createChart_queryStr($queryStr, "Nhà khoa học");
+      $chartname = "Doanh nghiệp";
+    }
 
-    return view('home.index', compact('doanhnghiep','keyword','filter','soluong_ketqua','pagi','hasChart'));
+    return view('home.index', compact('doanhnghiep','keyword','filter','soluong_ketqua','pagi','hasChart','chartvalue','chartname'));
 
   }
   

@@ -78,6 +78,7 @@ background: #428bca;
 @stop
 @section('content')
 	
+    
 	<?php
 		$locallinks=Request::root();
 		function cutstr($in){
@@ -87,6 +88,7 @@ background: #428bca;
 			return substr($in, 0,$length)."...";
 		}
 	?>
+
 	<div class="row" style="margin-top:20px">
         <div class="col-md-6">
             <form id="custom-search-input" method="GET" action="{{ url('/home/search')}}">
@@ -133,9 +135,35 @@ background: #428bca;
 
 	</div>
 	@if(isset($hasChart)&&$hasChart)
+		<script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+    
+       var record={!! json_encode($chartvalue) !!};
+       console.log(record);
+       // Create our data table.
+       var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Source');
+       data.addColumn('number', 'Total_Signup');
+       for(var k in record){
+            var v = record[k];
+           
+             data.addRow([k,v]);
+          console.log(v);
+          }
+        var options = {
+          title: "{{$chartname}}",
+          is3D: true,
+          
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+      }
+    </script>
 		<div id="count-chart" class = "col-md-12" style="height:300px; margin-top:20px">
 
-				<?php echo \lava::render('PieChart', 'Tổng quan', 'count-chart');?>
+				<div id="piechart_3d" style="height: 300px;"></div>
 
 		</div>
 	@endif

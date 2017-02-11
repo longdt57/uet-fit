@@ -45,7 +45,7 @@ class Utils{
     foreach ($tableData as $row) {
       $rows[$row->$title]=$row->$counts;
     }
-    Utils::createChart($rows, $title2);
+    return $rows;
   }
 }
 
