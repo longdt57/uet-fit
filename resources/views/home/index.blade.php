@@ -139,30 +139,28 @@ background: #428bca;
       google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
-    
-       var record={!! json_encode($chartvalue) !!};
-       console.log(record);
-       // Create our data table.
-       var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Source');
-       data.addColumn('number', 'Total_Signup');
-       for(var k in record){
-            var v = record[k];
-           
-             data.addRow([k,v]);
-          console.log(v);
-          }
+        var data = google.visualization.arrayToDataTable([
+        	['Title', 'percent'],	
+          <?php 
+          	foreach ($chartvalue as $key => $value) {
+          		echo "['$key',$value],";	
+          	}
+          ?>
+        ]);
+        
+
         var options = {
-          title: "{{$chartname}}",
+          title: <?php echo "'".$chartname."'";?>,
           is3D: true,
-          
         };
+
         var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
         chart.draw(data, options);
       }
     </script>
 		<div id="piechart_3d" class = "col-md-12" style="height:300px; margin-top:20px">
 		</div>
+		
 	@endif
 
 
