@@ -150,7 +150,7 @@ background: #428bca;
         
 
         var options = {
-          title: 'Test chart',
+          title: <?php echo "'".$chartname."'";?>,
           is3D: true,
         };
 
@@ -160,11 +160,7 @@ background: #428bca;
     </script>
 		<div id="piechart_3d" class = "col-md-12" style="height:300px; margin-top:20px">
 		</div>
-		<?php 
-          	foreach ($chartvalue as $key => $value) {
-          		echo "['$key',$value],";	
-          	}
-          ?>
+		
 		
 	@endif
 
