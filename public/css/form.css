@@ -1,0 +1,11 @@
+.div-form{
+	background-color: white
+}
+.form-control{
+	border:1px solid lightblue;
+	border-radius: 5px ;
+}
+.head-content{
+	color:blue;
+	font-weight: bold;
+}

@@ -29,6 +29,13 @@ Route::group(['middleware' => 'checkIsAdmin'], function () {
 	Route::post('/new-user-saved','AccountManagerController@new_user_save');
 	Route::post('/account-update','AccountManagerController@account_update');
 
+
+
+	//demo
+	Route::get('/quanly', function(){
+	return view('admin.tao_de_tai');
+	});
+
 });
 
 
